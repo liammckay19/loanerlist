@@ -2,3 +2,4 @@
 *.pyo
 .idea
 .vscode
+db.sqlite3
