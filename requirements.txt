@@ -1,44 +1,47 @@
-aiohttp @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_76kcgwehai/croot/aiohttp_1694181098663/work
-aiosignal @ file:///tmp/build/80754af9/aiosignal_1637843061372/work
-asgiref @ file:///Users/cbousseau/work/recipes/ci_py311/asgiref_1677957028708/work
-async-timeout @ file:///Users/cbousseau/work/recipes/ci_py311/async-timeout_1677925030615/work
-attrs @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_224434dqzl/croot/attrs_1695717839274/work
+aiohttp==3.8.5
+aiosignal==1.2.0
+asgiref==3.5.2
+async-timeout==4.0.2
+attrs==23.1.0
 blinker==1.4
 brotlipy==0.7.0
-cachetools @ file:///tmp/build/80754af9/cachetools_1619597386817/work
-certifi @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_3bweqb8byn/croot/certifi_1690232244779/work/certifi
-cffi @ file:///Users/cbousseau/work/recipes/ci_py311/cffi_1677903595907/work
-charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
-click @ file:///Users/cbousseau/work/recipes/ci_py311/click_1677920889666/work
+cachetools==4.2.2
+certifi==2023.7.22
+cffi==1.15.1
+charset-normalizer==2.0.4
+click==8.0.4
 crispy-bootstrap5==0.7
-cryptography @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_905z2r5rpq/croot/cryptography_1694211573866/work
-Django @ file:///Users/cbousseau/work/recipes/ci_py311/django_1677970851911/work
+cryptography==41.0.3
+Django==4.1
 django-crispy-forms==2.0
 django-widget-tweaks==1.5.0
-frozenlist @ file:///Users/cbousseau/work/recipes/ci_py311/frozenlist_1677923867353/work
+frozenlist==1.3.3
 google-api-core==2.12.0
 google-api-python-client==2.101.0
-google-auth @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_baa1y9cb44/croot/google-auth_1694152713228/work
+google-auth==2.22.0
 google-auth-httplib2==0.1.1
-google-auth-oauthlib @ file:///Users/cbousseau/work/recipes/ci_py311_2/google-auth-oauthlib_1678997129227/work
+google-auth-oauthlib==0.5.2
 googleapis-common-protos==1.60.0
 httplib2==0.22.0
-idna @ file:///Users/cbousseau/work/recipes/ci_py311/idna_1677906072337/work
-multidict @ file:///Users/cbousseau/work/recipes/ci_py311/multidict_1677923908690/work
-oauthlib @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_5cxgjn8mz4/croot/oauthlib_1679489641676/work
+idna==3.4
+multidict==6.0.2
+oauthlib==3.2.2
+pip==23.2.1
 protobuf==4.24.3
-pyasn1 @ file:///Users/ktietz/demo/mc3/conda-bld/pyasn1_1629708007385/work
+pyasn1==0.4.8
 pyasn1-modules==0.2.8
-pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
-PyJWT @ file:///Users/cbousseau/work/recipes/ci_py311/pyjwt_1677933681463/work
-pyOpenSSL @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_b8whqav6qm/croot/pyopenssl_1690223428943/work
+pycparser==2.21
+PyJWT==2.4.0
+pyOpenSSL==23.2.0
 pyparsing==3.1.1
-PySocks @ file:///Users/cbousseau/work/recipes/ci_py311/pysocks_1677906386870/work
-requests @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_54zi68h2nb/croot/requests_1690400233316/work
+PySocks==1.7.1
+requests==2.31.0
 requests-oauthlib==1.3.0
-rsa @ file:///tmp/build/80754af9/rsa_1614366226499/work
-six @ file:///tmp/build/80754af9/six_1644875935023/work
-sqlparse @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_16ptvrhamb/croot/sqlparse_1690901943673/work
+rsa==4.7.2
+setuptools==68.0.0
+six==1.16.0
+sqlparse==0.4.4
 uritemplate==4.1.1
-urllib3 @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_e9usuw__8i/croot/urllib3_1686166332689/work
-yarl @ file:///Users/cbousseau/work/recipes/ci_py311/yarl_1677926011607/work
+urllib3==1.26.16
+wheel==0.41.2
+yarl==1.8.1
