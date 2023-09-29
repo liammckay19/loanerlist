@@ -1,0 +1,14 @@
+.navbar-brand {
+  font-family: 'Helvetica';
+}
+
+
+.table-row {
+  cursor:pointer;
+}
+
+.alert {
+  position: fixed;
+  margin: 10px 10px 10px 10px;
+  z-index: 999;
+}
