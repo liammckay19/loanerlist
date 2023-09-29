@@ -1,0 +1,35 @@
+{% extends 'base_accounts.html' %}
+
+{% block title %}Rules of the Road for Get A Gig!{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Rules of the Road:</h3>
+          <p>
+            The forum is a place where people can interact and have discussions about different topics. We ask that you follow these guidelines to ensure that the forums have some productive conversation. These rules and guidelines are enforced by administrators and moderators, and at their discretion they may delete posts without warning that do not comply. Also, failure to comply with these rules may result in a ban from the forum.
+<br><br>
+We rely on all forum members to help keep these discussion forums a safe place for people to share and view information. To do this, we request that all members comply with the following rules when contributing to the discussion forums:</p>
+            <li>Keep it friendly</li>
+            <li>Be courteous and respectful. Appreciate that others may have an opinion different from yours.</li>
+            <li>Stay on topic. When creating a new discussion thread, give a clear topic title and put your post in the appropriate category. When contributing to an existing discussion, try to stay 'on topic'. If something new comes up within a topic that you would like to discuss, start a new thread.</li>
+            <li>Share your knowledge. Don't hold back in sharing your knowledge – it's likely someone will find it useful or interesting. When you give information, provide your sources. If your source is someone who you talked to, please provide their name and/or job title.</li>
+            <li>Refrain from demeaning, discriminatory, or harassing behaviour and speech.</li>
+            <br>
+            <p class="font-weight-bold">We maintain the rights to remove posts and threads to ensure that material posted in the discussion forums is not potentially harmful. For this reason, we may edit or choose not to publish any post, that:</p>
+            <li>contains disrespectful or derogatory remarks about any person</li>
+            <li>contains advice or content that we believe is damaging, unhelpful or distressing to others</li>
+            <li>contains swearing or offensive language, is nonsensical and/or irrelevant</li>
+            <li>promotes personal beliefs in a way that is disrespectful of the choices of others</li>
+            <li>is racist, sexist, homophobic, sexually explicit or suggestive, abusive or otherwise discriminatory or objectionable</li>
+        </div>
+        <div class="card-footer text-muted text-center">
+          New to Get A Gig!? <a href="{% url 'signup' %}">Sign up</a><br>
+          Already have an account? <a href="{% url 'login' %}">Log in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

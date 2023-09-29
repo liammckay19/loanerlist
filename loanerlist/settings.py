@@ -9,11 +9,13 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
-
+import mimetypes
+mimetypes.add_type("text/css", ".css", True)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +27,7 @@ SECRET_KEY = 'django-insecure-igx51@y!mj6sm49s(&=18w8xvp1du@-rqep)$rid%bus94+)g9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['avidexloanerlistfremont.pythonanywhere.com']
+ALLOWED_HOSTS = ['avidexloanerlistfremont.pythonanywhere.com', "127.0.0.1"]
 
 
 # Application definition
@@ -37,6 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'widget_tweaks',
+    'crispy_forms',
+    "crispy_bootstrap5",
+
+    'accounts',
+    'camera'
 ]
 
 MIDDLEWARE = [
@@ -54,7 +63,9 @@ ROOT_URLCONF = 'loanerlist.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -114,7 +125,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
+STATICFILES_DIRS = [
+    # Add paths to your static files directories here
+    os.path.join(BASE_DIR, 'static'),
+]
 STATIC_URL = 'static/'
 
 # Default primary key field type
@@ -126,5 +140,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # see https://help.pythonanywhere.com/pages/DjangoStaticFiles for more info
 MEDIA_ROOT = '/home/avidexloanerlistfremont/loanerlist/media'
 MEDIA_URL = '/media/'
-STATIC_ROOT = '/home/avidexloanerlistfremont/loanerlist/static'
-STATIC_URL = '/static/'
+# STATIC_ROOT = '/home/avidexloanerlistfremont/loanerlist/static'
+# STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static/')
+# Define the directories where Django will look for static files
+
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
