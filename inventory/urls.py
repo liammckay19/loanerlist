@@ -7,6 +7,8 @@ urlpatterns = [
     path('edit/<int:item_id>/', views.edit_inventory_item, name='edit_inventory_item'),
     path('reserved_inventory/', views.reserved_inventory_items, name='reserved_inventory'),
     path('all_reserved_inventory/', views.all_reserved_inventory_items, name='all_reserved_inventory'),
+    path('end_reservation_redirect_all/<int:reservation_id>/', views.end_reservation_redirect_all, name='end_reservation_redirect_all'),
     path('end_reservation/<int:reservation_id>/', views.end_reservation, name='end_reservation'),
+    path('end_reservation_of_item/<int:item_id>/', views.end_reservation_of_item, name='end_reservation_of_item'),
 
 ]

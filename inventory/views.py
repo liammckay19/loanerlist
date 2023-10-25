@@ -35,6 +35,29 @@ def reserved_inventory_items(request):
     # Pass the active reservations to the template
     return render(request, 'reserved_items.html', {'active_reservations': active_reservations})
 
+def end_reservation_redirect_all(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+
+    # Check if the reservation belongs to the currently logged-in user (security check)
+    if reservation.profile.user == request.user:
+        reservation.profile = None  # Remove the user from the reservation
+        reservation.active = False
+        reservation.save()
+
+    return redirect('all_reserved_inventory')
+
+
+def end_reservation_of_item(request, item_id):
+    item = get_object_or_404(InventoryItem, id=item_id)
+    active_reservation = Reservation.objects.filter(inventory_item=item, active=True).first()
+
+    if active_reservation and active_reservation.profile.user == request.user:
+        # Check if the reservation belongs to the currently logged-in user (security check)
+        active_reservation.active = False
+        active_reservation.save()
+
+    return redirect('inventory_item_detail', item_id=item.id)
+    
 def end_reservation(request, reservation_id):
     reservation = get_object_or_404(Reservation, id=reservation_id)
 
