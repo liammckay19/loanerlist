@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Reserved Inventory Items</h1>
+
+<div class="d-md-none"> <!-- Applies to screens smaller than 'md' (medium) -->
+    {% if active_reservations %}
+    {% for reservation in active_reservations %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">
+                {{ reservation.inventory_item.MAKE }} {{ reservation.inventory_item.PRODUCT_NAME }} {{ reservation.inventory_item.PART_NUMBER }}
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">Loaner Started: {{ reservation.reserved_on }}</h6>
+            <p class="card-text">Client: {{ reservation.client }}</p>
+            <p class="card-text">Work Order: {{ reservation.WO }}</p>
+            <form method="post" action="{% url 'end_reservation_redirect_all' reservation.id %}">
+                {% csrf_token %}
+                <!-- Add the button to open the confirmation modal -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal{{ reservation.id }}">
+                    End Reservation
+                </button>
+                <!-- Modal for confirmation -->
+                <div class="modal fade" id="confirmationModal{{ reservation.id }}" tabindex="-1" aria-labelledby="confirmationModalLabel{{ reservation.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmationModalLabel{{ reservation.id }}">Confirmation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h1>Put this item on {{reservation.inventory_item.SHELF}}</h1>
+                                Please confirm that you brought this item back to the loaner shelf 
+                                <ul>
+                                    <li><strong>Make:</strong> {{ reservation.inventory_item.MAKE }}</li>
+                                    <li><strong>Product Name:</strong> {{ reservation.inventory_item.PRODUCT_NAME }}</li>
+                                    <li><strong>Part Number:</strong> {{ reservation.inventory_item.PART_NUMBER }}</li>
+                                    <li><strong>Serial:</strong> {{ reservation.inventory_item.SERIAL }}</li>
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-danger">Confirm</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>Any reserved items will appear here.</p>
+    {% endif %}
+</div>
+
+<div class="d-none d-md-block"> <!-- Applies to screens 'md' (medium) and larger -->
+    {% if active_reservations %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Reserved On</th>
+                <th>Work Order</th>
+                <th>Client</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reservation in active_reservations %}
+            <tr>
+                <td>{{ reservation.inventory_item.MAKE }} {{ reservation.inventory_item.PRODUCT_NAME }} {{ reservation.inventory_item.PART_NUMBER }}</td>
+                <td>{{ reservation.reserved_on }}</td>
+                <td>{{ reservation.WO }}</td>
+                <td>{{ reservation.client }}</td>
+                <td>
+                    <form method="post" action="{% url 'end_reservation_redirect_all' reservation.id %}">
+                        {% csrf_token %}
+                        <!-- Add the button to open the confirmation modal -->
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal2{{ reservation.id }}">
+                            End Reservation
+                        </button>
+                        <!-- Modal for confirmation (visible on all screens) -->
+                        <div class="modal fade" id="confirmationModal2{{ reservation.id }}" tabindex="-1" aria-labelledby="confirmationModalLabel{{ reservation.id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="confirmationModalLabel{{ reservation.id }}">Confirmation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h1>Put this item on {{reservation.inventory_item.SHELF}}</h1>
+                                        Please confirm that you brought this item back to the loaner shelf 
+                                        <ul>
+                                            <li><strong>Make:</strong> {{ reservation.inventory_item.MAKE }}</li>
+                                            <li><strong>Product Name:</strong> {{ reservation.inventory_item.PRODUCT_NAME }}</li>
+                                            <li><strong>Part Number:</strong> {{ reservation.inventory_item.PART_NUMBER }}</li>
+                                            <li><strong>Serial:</strong> {{ reservation.inventory_item.SERIAL }}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-danger">Confirm</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Any reserved items will appear here.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

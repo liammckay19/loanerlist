@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!-- Item Info -->
+                        <h2>{{ item.MAKE }} {{ item.PRODUCT_NAME }}</h2>
+                        <h4>{{ item.PART_NUMBER }}</h4>
+                        <p class="mb-3">Shelf: {{ item.SHELF }}</p>
+
+                        <!-- Edit Button -->
+                        <a href="{% url 'edit_inventory_item' item.id %}" class="btn btn-primary mb-2">
+                            <i class="bi bi-pencil-fill"></i> Edit
+                        </a>
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- Key Attributes -->
+                        <ul class="list-group">
+                            <li class="list-group-item"><strong>Make:</strong> {{ item.MAKE }}</li>
+                            <li class="list-group-item"><strong>Product Name:</strong> {{ item.PRODUCT_NAME }}</li>
+                            <li class="list-group-item"><strong>Part Number:</strong> {{ item.PART_NUMBER }}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Other Attributes -->
+                <div class="row mt-4">
+                    <div class="col-lg-6">
+                        <ul class="list-group">
+                            <li class="list-group-item"><strong>QTY:</strong> {{ item.QTY }}</li>
+                            <li class="list-group-item"><strong>Serial:</strong> {{ item.SERIAL }}</li>
+                            <li class="list-group-item"><strong>NOTE:</strong> {{ item.NOTE }}</li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <ul class="list-group">
+                            <li class="list-group-item"><strong>Product Type:</strong> {{ item.PRODUCT_TYPE }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+
+            {% if active_reservation %}
+            <div class="bg-warning text-black p-3 m-3 rounded d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="me-2">
+                        <i class="bi bi-exclamation-triangle-fill"></i> <!-- Bootstrap 5 warning icon -->
+                    </span>
+                    This item is currently reserved by {{ active_reservation.profile.user.username }} for Work Order: {{ active_reservation.WO }}.
+                </div>
+                <!-- Add the button to open the confirmation modal -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+                    End Reservation
+                </button>
+            </div>
+
+
+            {% else %}
+                <!-- Reservation Form -->
+                <div class="m-3">
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            {{ form.WO.label_tag }} 
+                            {{ form.WO }}
+                            {% if form.WO.errors %}
+                                <div class="text-danger">
+                                    {{ form.WO.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Add the client field -->
+                        <div class="mb-3">
+                            {{ form.client.label_tag }}
+                            {{ form.client }}
+                            {% if form.client.errors %}
+                                <div class="text-danger">
+                                    {{ form.client.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Reserve</button>
+                    </form>
+                </div>
+            {% endif %}
+
+            <!-- Confirmation Modal -->
+            <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confirm Reservation End</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h1>Put this item on {{item.SHELF}}</h1>
+                            Please confirm that you brought this item back to the loaner shelf 
+                            <ul>
+                                <li><strong>Make:</strong> {{ item.MAKE }}</li>
+                                <li><strong>Product Name:</strong> {{ item.PRODUCT_NAME }}</li>
+                                <li><strong>Part Number:</strong> {{ item.PART_NUMBER }}</li>
+                                <li><strong>Serial:</strong> {{ item.SERIAL }}</li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <!-- Add the form submission button to confirm ending the reservation -->
+                            <form method="post" action="{% url 'end_reservation_of_item' item.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Confirm</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

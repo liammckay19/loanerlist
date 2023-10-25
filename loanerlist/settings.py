@@ -43,9 +43,11 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'crispy_forms',
     "crispy_bootstrap5",
+    "django_tables2",
 
     'accounts',
-    'camera'
+    'camera',
+    'inventory'
 ]
 
 MIDDLEWARE = [
