@@ -1,0 +1,140 @@
+<!-- inventory_item_list.html -->
+{% extends "base.html" %}
+{% load render_table from django_tables2%}
+
+{% block content %}
+
+<h1>Inventory</h1>
+
+<div class="accordion" id="searchAccordion">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="searchHeading">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#searchForm" aria-expanded="true" aria-controls="searchForm">
+                Search for something
+            </button>
+        </h2>
+        <div id="searchForm" class="accordion-collapse collapse show" aria-labelledby="searchHeading">
+            <form method="get" class="accordion-body row gy-2 gx-3 align-items-center">
+            
+                <div class="col-auto">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" name="qty_search" value="{{ QTY }}" class="form-control" placeholder="QTY">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" name="make_search" value="{{ MAKE }}" class="form-control" placeholder="MAKE">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" name="part_number_search" value="{{ PART_NUMBER }}" class="form-control" placeholder="PART NUMBER">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" name="product_name_search" value="{{ PRODUCT_NAME }}" class="form-control" placeholder="PRODUCT NAME">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" name="serial_search" value="{{ SERIAL }}" class="form-control" placeholder="SERIAL">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" name="note_search" value="{{ NOTE }}" class="form-control" placeholder="NOTE">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" name="shelf_search" value="{{ SHELF }}" class="form-control" placeholder="SHELF">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group">
+                        <select name="product_type_search" class="form-select">
+                            <option value="">-- Select a Product Type --</option>
+                            {% for value, display_name in CATEGORY_CHOICES %}
+                                <option value="{{ value }}" {% if PRODUCT_TYPE == value %}selected{% endif %}>{{ display_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <input type="submit" value="Search" class="btn btn-primary">
+                </div>
+
+            </form>
+
+            </div>
+
+</div>
+
+<br>
+<!-- Show list of cards on mobile screens -->
+<div class="d-block d-sm-none">
+    {% for item in table.data %}
+        <a href="{% url 'inventory_item_detail' item.id %}" class="text-decoration-none">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.MAKE }} </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ item.PRODUCT_NAME }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ item.PART_NUMBER }}</h6>
+                    <!-- Display other item details as needed -->
+                    <i class="bi bi-link-45deg"></i>
+                </div>
+            </div>
+        </a>
+
+    {% endfor %}
+</div>
+
+<!-- Show data table on screens larger than mobile -->
+<div class="d-none d-sm-block">
+    {% render_table table %}
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.11.6/js/jquery.dataTables.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const allTableRows = document.querySelectorAll('tr');
+
+        allTableRows.forEach(row => {
+            row.style.cursor = "pointer";
+        });
+    });
+</script>
+<script>
+    
+    $(document).ready(function($) {
+        $("tr").click(function() {
+            window.location = $(this).data("href");
+        });
+    });
+</script>
+
+{% endblock %}

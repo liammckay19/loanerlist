@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+
+            <h2>{{ item.MAKE }} {{ item.PRODUCT_NAME }}</h2>
+            <h4>{{ item.PART_NUMBER }}</h4>
+
+            <a href="{% url 'edit_inventory_item' item.id %}" class="btn btn-primary mb-2">
+                <i class="bi bi-pencil-fill"></i> Edit
+            </a>
+
+            <!-- Display all attributes of the InventoryItem -->
+            <div class="mb-3">
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>QTY:</strong> {{ item.QTY }}</li>
+                    <li class="list-group-item"><strong>MAKE:</strong> {{ item.MAKE }}</li>
+                    <li class="list-group-item"><strong>PART NUMBER:</strong> {{ item.PART_NUMBER }}</li>
+                    <li class="list-group-item"><strong>PRODUCT NAME:</strong> {{ item.PRODUCT_NAME }}</li>
+                    <li class="list-group-item"><strong>SERIAL:</strong> {{ item.SERIAL }}</li>
+                    <li class="list-group-item"><strong>NOTE:</strong> {{ item.NOTE }}</li>
+                    <li class="list-group-item"><strong>SHELF:</strong> {{ item.SHELF }}</li>
+                    <li class="list-group-item"><strong>PRODUCT TYPE:</strong> {{ item.PRODUCT_TYPE }}</li>
+                </ul>
+            </div>
+
+
+
+            {% if active_reservation %}
+                <div class="alert alert-info" role="alert">
+                    This item is currently reserved by {{ active_reservation.profile.user.username }} for Work Order: {{ active_reservation.WO }}.
+                </div>
+            {% else %}
+                <!-- Reservation Form -->
+                <div class="mb-3">
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            {{ form.WO.label_tag }} 
+                            {{ form.WO }}
+                            {% if form.WO.errors %}
+                                <div class="text-danger">
+                                    {{ form.WO.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Add the client field -->
+                        <div class="mb-3">
+                            {{ form.client.label_tag }}
+                            {{ form.client }}
+                            {% if form.client.errors %}
+                                <div class="text-danger">
+                                    {{ form.client.errors|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Reserve</button>
+                    </form>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

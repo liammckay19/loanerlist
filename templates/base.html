@@ -2,11 +2,14 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>{% block title %}oh what a big boy{% endblock %}</title>
+    <title>{% block title %}Avidex Loaner List{% endblock %}</title>
     <link href="https://fonts.googleapis.com/css?family=Peralta" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Modak|Raleway&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     {% block stylesheet %} {% endblock %}
   </head>
   <body>
@@ -24,13 +27,25 @@
 
             <ul class="navbar-nav">
               <li class="nav-item p-2">
-                <a class="btn btn-outline-dark rounded-pill " href="{% url 'home' %}">Home</a>
+                <a class="nav-link" href="{% url 'home' %}">Home</a>
               </li>
             </ul>
             {% if user.is_authenticated %}
               <ul class="navbar-nav ms-auto">
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                <li class="nav-item p-2">
+                  <a class="nav-link " href="{% url 'reserved_inventory' %}">My Loaners</a>
+                </li>
+
+                <li class="nav-item p-2">
+                  <a class="nav-link" href="{% url 'all_reserved_inventory' %}"> Active Reservations </a>
+                </li>
+
+                <li class="nav-item p-2">
+                  <a class="nav-link" href="{% url 'admin:index' %}"> Admin </a>
+                </li>
+                <li class="nav-item dropdown p-2">
+                  <a class="nav-link dropdown-toggle rounded-pill" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     {{ user.username }}
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
@@ -63,6 +78,8 @@
         </div>
       </div>
     {% endblock body %}
+    {% block scripts %}
+    {% endblock scripts %}
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
   </body>
 </html>

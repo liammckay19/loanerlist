@@ -20,12 +20,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from accounts import views as accounts_views
+from inventory import views as inventory_views
 from loanerlistHome import views
 
 from camera import urls
 
 urlpatterns = [
-    re_path(r'^$', views.home_page, name='home'),
+    path('', inventory_views.inventory_item_list, name='home'),
+    path('', include('inventory.urls'), name='home'),
 
     re_path(r'^signup/$', accounts_views.signup, name='signup'),
     re_path(r'^login/$', auth_views.LoginView.as_view(template_name='login.html'), name='login'),

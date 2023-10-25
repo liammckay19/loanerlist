@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Reserved Inventory Items</h1>
+
+<div class="d-md-none"> <!-- Applies to screens smaller than 'md' (medium) -->
+    {% if active_reservations %}
+    {% for reservation in active_reservations %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">
+                {{ reservation.inventory_item.MAKE }} {{ reservation.inventory_item.PRODUCT_NAME }} {{ reservation.inventory_item.PART_NUMBER }}
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">Loaner Started: {{ reservation.reserved_on }}</h6>
+            <p class="card-text">Client: {{ reservation.client }}</p>
+            <p class="card-text">Work Order: {{ reservation.WO }}</p>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>Any reserved items will appear here.</p>
+    {% endif %}
+</div>
+
+<div class="d-none d-md-block"> <!-- Applies to screens 'md' (medium) and larger -->
+    {% if active_reservations %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Reserved On</th>
+                <th>Work Order</th>
+                <th>Client</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reservation in active_reservations %}
+            <tr>
+                <td>{{ reservation.inventory_item.MAKE }} {{ reservation.inventory_item.PRODUCT_NAME }} {{ reservation.inventory_item.PART_NUMBER }}</td>
+                <td>{{ reservation.reserved_on }}</td>
+                <td>{{ reservation.WO }}</td>
+                <td>{{ reservation.client }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Any reserved items will appear here.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
