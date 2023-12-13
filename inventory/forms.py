@@ -23,21 +23,24 @@ class InventoryItemForm(forms.ModelForm):
     class Meta:
         model = InventoryItem
         fields = [
-            'QTY', 
-            'MAKE', 
-            'PART_NUMBER', 
-            'PRODUCT_NAME', 
-            'SERIAL', 
-            'NOTE', 
+            'QTY',
+            'MAKE',
+            'PART_NUMBER',
+            'PRODUCT_NAME',
+            'SERIAL',
+            'NOTE',
             'SHELF',
             'PRODUCT_TYPE',
+            'DESCRIPTION',
+
         ]
-        
+
         widgets = {
             'QTY': forms.NumberInput(attrs={'class': 'form-control'}),
             'MAKE': forms.TextInput(attrs={'class': 'form-control'}),
             'PART_NUMBER': forms.TextInput(attrs={'class': 'form-control'}),
             'PRODUCT_NAME': forms.TextInput(attrs={'class': 'form-control'}),
+            'DESCRIPTION': forms.TextInput(attrs={'class': 'form-control'}),
             'SERIAL': forms.TextInput(attrs={'class': 'form-control'}),
             'NOTE': forms.TextInput(attrs={'class': 'form-control'}),
             'SHELF': forms.TextInput(attrs={'class': 'form-control'}),

@@ -16,7 +16,7 @@ class InventoryItemTable(tables.Table):
         model = InventoryItem
         template_name = "django_tables2/bootstrap5.html"
         attrs = {"class": "table table-hover"}
-        fields = ('QTY', 'MAKE', 'PART_NUMBER', 'PRODUCT_NAME', 'SERIAL', 'NOTE', 'SHELF')  # Include other fields as necessary.
+        fields = ('QTY', 'MAKE', 'PART_NUMBER', 'PRODUCT_NAME', 'DESCRIPTION', 'SERIAL', 'NOTE', 'SHELF')  # Include other fields as necessary.
         row_attrs = {
             'data-href': lambda record: record.get_absolute_url()
         }

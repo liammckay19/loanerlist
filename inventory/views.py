@@ -23,7 +23,7 @@ def all_reserved_inventory_items(request):
 
     # Pass the active reservations to the template
     return render(request, 'all_reserved_items.html', {'active_reservations': active_reservations})
-    
+
 
 def reserved_inventory_items(request):
     # Get the currently logged-in user
@@ -57,7 +57,7 @@ def end_reservation_of_item(request, item_id):
         active_reservation.save()
 
     return redirect('inventory_item_detail', item_id=item.id)
-    
+
 def end_reservation(request, reservation_id):
     reservation = get_object_or_404(Reservation, id=reservation_id)
 
@@ -92,7 +92,7 @@ def inventory_item_detail(request, item_id):
 
 def edit_inventory_item(request, item_id):
     item = get_object_or_404(InventoryItem, id=item_id)
-    
+
     if request.method == 'POST':
         form = InventoryItemForm(request.POST, instance=item)
         if form.is_valid():
@@ -115,7 +115,7 @@ def inventory_item_list(request):
         'PART_NUMBER': request.GET.get('part_number_search', ''),
         'PRODUCT_NAME': request.GET.get('product_name_search', ''),
         'SERIAL': request.GET.get('serial_search', ''),
-        'NOTE': request.GET.get('note_search', ''),
+        'DESCRIPTION': request.GET.get('description_search', ''),
         'SHELF': request.GET.get('shelf_search', ''),
         'PRODUCT_TYPE': request.GET.get('product_type_search', ''),
 
@@ -133,8 +133,8 @@ def inventory_item_list(request):
         query_filter &= Q(PRODUCT_NAME__icontains=queries['PRODUCT_NAME'])
     if queries['SERIAL']:
         query_filter &= Q(SERIAL__icontains=queries['SERIAL'])
-    if queries['NOTE']:
-        query_filter &= Q(NOTE__icontains=queries['NOTE'])
+    if queries['DESCRIPTION']:
+        query_filter &= Q(DESCRIPTION__icontains=queries['DESCRIPTION'])
     if queries['SHELF']:
         query_filter &= Q(SHELF__icontains=queries['SHELF'])
     if queries['PRODUCT_TYPE']:

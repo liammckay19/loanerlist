@@ -61,7 +61,7 @@
                         <span class="input-group-text">
                             <i class="bi bi-search"></i>
                         </span>
-                        <input type="text" name="note_search" value="{{ NOTE }}" class="form-control" placeholder="NOTE">
+                        <input type="text" name="description_search" value="{{ DESCRIPTION }}" class="form-control" placeholder="DESCRIPTION">
                     </div>
                 </div>
                 <div class="col-auto">
@@ -102,6 +102,7 @@
                     <h5 class="card-title">{{ item.MAKE }} </h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{ item.PRODUCT_NAME }}</h6>
                     <h6 class="card-subtitle mb-2 text-muted">{{ item.PART_NUMBER }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ item.DESCRIPTION }}</h6>
                     <!-- Display other item details as needed -->
                     <i class="bi bi-link-45deg"></i>
                 </div>
