@@ -26,6 +26,7 @@ class Command(BaseCommand):
                     MAKE=row['MAKE'],
                     PART_NUMBER=row['PART NUMBER'],
                     PRODUCT_NAME=row['PRODUCT NAME'],
+                    DESCRIPTION=row['DESCRIPTION'],
                     SERIAL=row['SERIAL'],
                     NOTE=row['NOTE'],
                     SHELF=row['SHELF']

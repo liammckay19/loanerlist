@@ -12,6 +12,7 @@ class InventoryItem(models.Model):
     MAKE = models.CharField(max_length=255)
     PART_NUMBER = models.CharField(max_length=255, blank=True)
     PRODUCT_NAME = models.CharField(max_length=255, blank=True)
+    DESCRIPTION = models.CharField(max_length=1000, blank=True)
     SERIAL = models.CharField(max_length=255, blank=True)
     NOTE = models.CharField(max_length=255, blank=True)
     SHELF = models.CharField(max_length=255, blank=True)
