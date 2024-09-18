@@ -12,11 +12,16 @@ class InventoryItemTable(tables.Table):
         verbose_name="LINK"  # Change this to whatever you want to display as the column header
     )
 
+    on_the_shelf_column = TemplateColumn(
+        template_name="on_the_shelf_column.html",  # Create a template for the link column
+        verbose_name="On the shelf?"  # Change this to whatever you want to display as the column header
+    )
+
     class Meta:
         model = InventoryItem
         template_name = "django_tables2/bootstrap5.html"
         attrs = {"class": "table table-hover"}
         fields = ('QTY', 'MAKE', 'PART_NUMBER', 'PRODUCT_NAME', 'DESCRIPTION', 'SERIAL', 'NOTE', 'SHELF')  # Include other fields as necessary.
         row_attrs = {
-            'data-href': lambda record: record.get_absolute_url()
+            'href': lambda record: record.get_absolute_url()
         }

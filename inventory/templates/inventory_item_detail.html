@@ -44,85 +44,104 @@
                         </ul>
                     </div>
                 </div>
-            </div>
 
+                {% if user.is_authenticated %}
+                    {% if active_reservation %}
+                    <div class="bg-warning text-black p-3 m-3 rounded d-flex justify-content-between align-items-center">
 
-
-            {% if active_reservation %}
-            <div class="bg-warning text-black p-3 m-3 rounded d-flex justify-content-between align-items-center">
-                <div>
-                    <span class="me-2">
-                        <i class="bi bi-exclamation-triangle-fill"></i> <!-- Bootstrap 5 warning icon -->
-                    </span>
-                    This item is currently reserved by {{ active_reservation.profile.user.username }} for Work Order: {{ active_reservation.WO }}.
-                </div>
-                <!-- Add the button to open the confirmation modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal">
-                    End Reservation
-                </button>
-            </div>
-
-
-            {% else %}
-                <!-- Reservation Form -->
-                <div class="m-3">
-                    <form method="post" action="">
-                        {% csrf_token %}
-
-                        <div class="mb-3">
-                            {{ form.WO.label_tag }}
-                            {{ form.WO }}
-                            {% if form.WO.errors %}
-                                <div class="text-danger">
-                                    {{ form.WO.errors|first }}
-                                </div>
-                            {% endif %}
+                        <h3>Avidex Loaner Sign-out below:</h3>
+                        <div>
+                            <span class="me-2">
+                                <i class="bi bi-exclamation-triangle-fill"></i> <!-- Bootstrap 5 warning icon -->
+                            </span>
+                            This item is currently reserved by {{ active_reservation.profile.user.username }} for Work Order: {{ active_reservation.WO }}.
                         </div>
+                        <!-- Add the button to open the confirmation modal -->
+                        {% if reservation.profile == user.profile %}
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+                                End Reservation
+                            </button>
+                        {% endif %}
+                    </div>
 
-                        <!-- Add the client field -->
-                        <div class="mb-3">
-                            {{ form.client.label_tag }}
-                            {{ form.client }}
-                            {% if form.client.errors %}
-                                <div class="text-danger">
-                                    {{ form.client.errors|first }}
-                                </div>
-                            {% endif %}
-                        </div>
 
-                        <button type="submit" class="btn btn-primary">Reserve</button>
-                    </form>
-                </div>
-            {% endif %}
-
-            <!-- Confirmation Modal -->
-            <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Confirm Reservation End</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <h1>Put this item on {{item.SHELF}}</h1>
-                            Please confirm that you brought this item back to the loaner shelf
-                            <ul>
-                                <li><strong>Make:</strong> {{ item.MAKE }}</li>
-                                <li><strong>Product Name:</strong> {{ item.PRODUCT_NAME }}</li>
-                                <li><strong>Part Number:</strong> {{ item.PART_NUMBER }}</li>
-                                <li><strong>Serial:</strong> {{ item.SERIAL }}</li>
-                            </ul>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <!-- Add the form submission button to confirm ending the reservation -->
-                            <form method="post" action="{% url 'end_reservation_of_item' item.id %}">
+                    {% else %}
+                        <!-- Reservation Form -->
+                        <div class="m-3">
+                            <h3>Avidex Loaner Sign-out below:</h3>
+                            <form method="post" action="">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-danger">Confirm</button>
+
+                                <div class="mb-3">
+                                    {{ form.WO.label_tag }}
+                                    {{ form.WO }}
+                                    {% if form.WO.errors %}
+                                        <div class="text-danger">
+                                            {{ form.WO.errors|first }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Add the client field -->
+                                <div class="mb-3">
+                                    {{ form.client.label_tag }}
+                                    {{ form.client }}
+                                    {% if form.client.errors %}
+                                        <div class="text-danger">
+                                            {{ form.client.errors|first }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Reserve</button>
                             </form>
                         </div>
+                    {% endif %}
+
+                    <!-- Confirmation Modal -->
+                    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirm Reservation End</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <h1>Put this item on {{item.SHELF}}</h1>
+                                    Please confirm that you brought this item back to the loaner shelf
+                                    <ul>
+                                        <li><strong>Make:</strong> {{ item.MAKE }}</li>
+                                        <li><strong>Product Name:</strong> {{ item.PRODUCT_NAME }}</li>
+                                        <li><strong>Part Number:</strong> {{ item.PART_NUMBER }}</li>
+                                        <li><strong>Serial:</strong> {{ item.SERIAL }}</li>
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <!-- Add the form submission button to confirm ending the reservation -->
+                                    <form method="post" action="{% url 'end_reservation_of_item' item.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Confirm</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+            {% else %}
+                {% if active_reservation %}
+                    <div class="bg-warning text-black p-3 m-3 rounded d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="me-2">
+                                <i class="bi bi-exclamation-triangle-fill"></i> <!-- Bootstrap 5 warning icon -->
+                            </span>
+                            This item is currently reserved by {{ active_reservation.profile.user.username }} for Work Order: {{ active_reservation.WO }}.
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{% url 'signup' %}" class="btn btn-primary p-2 m-2">Reserve</a>
+                    <p>You will be redirected to create an account to reserve this unit.</p>
+                {% endif %}
+            {% endif %}
             </div>
 
         </div>

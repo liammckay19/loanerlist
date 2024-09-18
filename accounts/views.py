@@ -1,6 +1,6 @@
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.urls import reverse
@@ -15,8 +15,10 @@ from django.contrib.auth.views import PasswordResetView
 from django.shortcuts import get_object_or_404
 
 from .forms import SignUpForm, UserForm, CustomPasswordResetForm, ProfileForm
-from .models import Profile 
+from .models import Profile
 
+from django.contrib.contenttypes.models import ContentType
+from inventory.models import InventoryItem, Reservation, ReservationHistory  # Change 'your_app' to the name of your app
 
 
 
@@ -27,6 +29,21 @@ def signup(request):
         print(form.is_valid())
         if form.is_valid():
             user = form.save()
+            content_type = ContentType.objects.get_for_model(InventoryItem)
+            permissions = Permission.objects.filter(content_type=content_type)
+            user.user_permissions.add(*permissions)
+
+            content_type = ContentType.objects.get_for_model(Reservation)
+            permissions = Permission.objects.filter(content_type=content_type)
+            user.user_permissions.add(*permissions)
+
+            content_type = ContentType.objects.get_for_model(ReservationHistory)
+            permissions = Permission.objects.filter(content_type=content_type)
+            user.user_permissions.add(*permissions)
+            user.is_staff = True
+
+            user.save()
+
             print(request)
             auth_login(request, user)
             # Generate the URL for 'my_account' view and redirect

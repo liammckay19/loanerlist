@@ -1,5 +1,12 @@
 from django import forms
 from .models import Reservation, InventoryItem
+import constants
+
+class CSVUploadForm(forms.Form):
+    csv_file = forms.FileField()
+
+class ChangeProductTypeForm(forms.Form):
+    new_product_type = forms.ChoiceField(choices=constants.CATEGORY_CHOICES, required=True, label="New Product Type")
 
 class ReservationForm(forms.ModelForm):
     class Meta:

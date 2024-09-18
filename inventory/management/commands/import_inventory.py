@@ -29,7 +29,8 @@ class Command(BaseCommand):
                     DESCRIPTION=row['DESCRIPTION'],
                     SERIAL=row['SERIAL'],
                     NOTE=row['NOTE'],
-                    SHELF=row['SHELF']
+                    SHELF=row['SHELF'],
+                    PRODUCT_TYPE=row['PRODUCT TYPE']
                 )
                 if created:
                     self.stdout.write(self.style.SUCCESS(f"Imported new item: {item}"))

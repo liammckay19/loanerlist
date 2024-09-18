@@ -8,6 +8,9 @@ from django.shortcuts import render
 from .tables import InventoryItemTable
 from django_tables2 import RequestConfig
 from django.db.models import Q
+from django.contrib import messages
+from functools import reduce
+import operator
 
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import ReservationForm, InventoryItemForm
@@ -55,8 +58,11 @@ def end_reservation_of_item(request, item_id):
         # Check if the reservation belongs to the currently logged-in user (security check)
         active_reservation.active = False
         active_reservation.save()
+        messages.success(request, f"Successfully ended {active_reservation.WO}, {active_reservation.client}.")
+    else:
+        messages.error(request, f"Unable to end reservation.")
 
-    return redirect('inventory_item_detail', item_id=item.id)
+    return redirect('inventory_item_list')
 
 def end_reservation(request, reservation_id):
     reservation = get_object_or_404(Reservation, id=reservation_id)
@@ -80,7 +86,13 @@ def inventory_item_detail(request, item_id):
             reservation.profile = request.user.profile
             reservation.inventory_item = item
             reservation.save()
+
+            # Assuming 'work_order_number' and 'client_name' are fields on your reservation model
+            messages.success(request, f"Successfully reserved this item for Work Order {reservation.WO}, {reservation.client}.")
+
+
             return redirect('inventory_item_list')  # Redirect as needed
+
     else:
         form = ReservationForm()
     context = {
@@ -118,27 +130,42 @@ def inventory_item_list(request):
         'DESCRIPTION': request.GET.get('description_search', ''),
         'SHELF': request.GET.get('shelf_search', ''),
         'PRODUCT_TYPE': request.GET.get('product_type_search', ''),
-
+        'GENERAL_SEARCH': request.GET.get('general_search', ''),
     }
 
     query_filter = Q()
 
-    if queries['QTY']:
-        query_filter &= Q(QTY=queries['QTY'])  # Assumes exact match for integer field
-    if queries['MAKE']:
-        query_filter &= Q(MAKE__icontains=queries['MAKE'])
-    if queries['PART_NUMBER']:
-        query_filter &= Q(PART_NUMBER__icontains=queries['PART_NUMBER'])
-    if queries['PRODUCT_NAME']:
-        query_filter &= Q(PRODUCT_NAME__icontains=queries['PRODUCT_NAME'])
-    if queries['SERIAL']:
-        query_filter &= Q(SERIAL__icontains=queries['SERIAL'])
-    if queries['DESCRIPTION']:
-        query_filter &= Q(DESCRIPTION__icontains=queries['DESCRIPTION'])
-    if queries['SHELF']:
-        query_filter &= Q(SHELF__icontains=queries['SHELF'])
-    if queries['PRODUCT_TYPE']:
-        query_filter &= Q(PRODUCT_TYPE__icontains=queries['PRODUCT_TYPE'])
+
+    if queries['GENERAL_SEARCH']:
+        keywords = queries['GENERAL_SEARCH'].split(" ")
+        query_filter |= reduce(operator.and_, (Q(MAKE__icontains=x) for x in keywords))
+        query_filter |= reduce(operator.and_, (Q(PART_NUMBER__icontains=x) for x in keywords))
+        query_filter |= reduce(operator.and_, (Q(PRODUCT_NAME__icontains=x) for x in keywords))
+        query_filter |= reduce(operator.and_, (Q(DESCRIPTION__icontains=x) for x in keywords))
+        query_filter |= reduce(operator.and_, (Q(PRODUCT_TYPE__icontains=x) for x in keywords))
+        # for word in keywords:
+        #     query_filter |= Q(MAKE__icontains=word)
+        #     query_filter |= Q(PART_NUMBER__icontains=word)
+        #     query_filter |= Q(PRODUCT_NAME__icontains=word)
+        #     query_filter |= Q(DESCRIPTION__icontains=word)
+        #     query_filter |= Q(PRODUCT_TYPE__icontains=word)
+    else:
+        if queries['QTY']:
+            query_filter &= Q(QTY=queries['QTY'])  # Assumes exact match for integer field
+        if queries['MAKE']:
+            query_filter &= Q(MAKE__icontains=queries['MAKE'])
+        if queries['PART_NUMBER']:
+            query_filter &= Q(PART_NUMBER__icontains=queries['PART_NUMBER'])
+        if queries['PRODUCT_NAME']:
+            query_filter &= Q(PRODUCT_NAME__icontains=queries['PRODUCT_NAME'])
+        if queries['SERIAL']:
+            query_filter &= Q(SERIAL__icontains=queries['SERIAL'])
+        if queries['DESCRIPTION']:
+            query_filter &= Q(DESCRIPTION__icontains=queries['DESCRIPTION'])
+        if queries['SHELF']:
+            query_filter &= Q(SHELF__icontains=queries['SHELF'])
+        if queries['PRODUCT_TYPE']:
+            query_filter &= Q(PRODUCT_TYPE__icontains=queries['PRODUCT_TYPE'])
 
     items = InventoryItem.objects.filter(query_filter)
 

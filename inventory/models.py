@@ -18,12 +18,22 @@ class InventoryItem(models.Model):
     SHELF = models.CharField(max_length=255, blank=True)
     PRODUCT_TYPE = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default=UNCATEGORIZED)  # Add the category field
 
+    PRINTED = models.BooleanField(default=False)  # Indicates if the item has been printed, default is False
+    DATE_CREATED = models.DateTimeField(auto_now_add=True)  # Automatically set to the current date when the item is first created
+
     def __str__(self):
-        return self.MAKE  # Display the MAKE field as the string representation
+        s = f"{self.MAKE} {self.PART_NUMBER} {self.PRODUCT_NAME}"
+        return s[:20]  # Display the MAKE field as the string representation
 
 
     def get_absolute_url(self):
         return reverse('inventory_item_detail', args=[str(self.id)])
+
+    def get_reservation_status(self):
+        # Check if there is at least one active reservation for this inventory item
+        has_active_reservation = self.reservation_set.filter(active=True).exists()
+        return has_active_reservation
+
 
 class Reservation(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
@@ -32,11 +42,10 @@ class Reservation(models.Model):
     WO = models.CharField(max_length=255, verbose_name="Work Order", blank=True)  # Work Order field
     active = models.BooleanField(default=True)
     client = models.CharField(max_length=255, verbose_name="Client", default='Not specified')  # Add the Client field
-    class Meta:
-        unique_together = ('profile', 'inventory_item',)
+    notes = models.CharField(max_length=3000, verbose_name="Notes", default='Notes')  # Add the Client field
 
     def __str__(self):
-        return f"Reservation for {self.inventory_item} by {self.client}"  # Include the client in the __str__ representation
+        return f"Reservation of {self.inventory_item} for {self.client}"  # Include the client in the __str__ representation
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

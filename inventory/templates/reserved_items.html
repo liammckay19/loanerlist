@@ -16,9 +16,12 @@
             <p class="card-text">Work Order: {{ reservation.WO }}</p>
             <form method="post" action="{% url 'end_reservation_redirect_all' reservation.id %}">
                 {% csrf_token %}
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal{{ reservation.id }}">
-                    End Reservation
-                </button>            
+                {% if reservation.profile == user.profile %}
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal{{ reservation.id }}">
+                        End Reservation
+                    </button>
+                {% endif %}
+
                 <!-- Modal for confirmation -->
                 <div class="modal fade" id="confirmationModal{{ reservation.id }}" tabindex="-1" aria-labelledby="confirmationModalLabel{{ reservation.id }}" aria-hidden="true">
                     <div class="modal-dialog">
@@ -29,7 +32,7 @@
                             </div>
                             <div class="modal-body">
                                 <h1>Put this item on {{reservation.inventory_item.SHELF}}</h1>
-                                Please confirm that you brought this item back to the loaner shelf 
+                                Please confirm that you brought this item back to the loaner shelf
                                 <ul>
                                     <li><strong>Make:</strong> {{ reservation.inventory_item.MAKE }}</li>
                                     <li><strong>Product Name:</strong> {{ reservation.inventory_item.PRODUCT_NAME }}</li>
@@ -75,9 +78,12 @@
                 <td>
                     <form method="post" action="{% url 'end_reservation_redirect_all' reservation.id %}">
                         {% csrf_token %}
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal2{{ reservation.id }}">
-                            End Reservation
-                        </button>
+
+                        {% if reservation.profile == user.profile %}
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal2{{ reservation.id }}">
+                                End Reservation
+                            </button>
+                        {% endif %}
                         <!-- Modal for confirmation (visible on all screens) -->
                         <div class="modal fade" id="confirmationModal2{{ reservation.id }}" tabindex="-1" aria-labelledby="confirmationModalLabel{{ reservation.id }}" aria-hidden="true">
                             <div class="modal-dialog">
@@ -88,7 +94,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <h1>Put this item on {{reservation.inventory_item.SHELF}}</h1>
-                                        Please confirm that you brought this item back to the loaner shelf 
+                                        Please confirm that you brought this item back to the loaner shelf
                                         <ul>
                                             <li><strong>Make:</strong> {{ reservation.inventory_item.MAKE }}</li>
                                             <li><strong>Product Name:</strong> {{ reservation.inventory_item.PRODUCT_NAME }}</li>

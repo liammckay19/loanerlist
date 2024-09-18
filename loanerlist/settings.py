@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     'widget_tweaks',
     'crispy_forms',
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'camera',
     'inventory'
 ]
+SITE_ID = 1  # Adjust the SITE_ID to match your site's ID in the database
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

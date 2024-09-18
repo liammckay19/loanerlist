@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>{% block title %}Avidex Loaner List{% endblock %}</title>
     <link href="https://fonts.googleapis.com/css?family=Peralta" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Modak|Raleway&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Modak|Raleway&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
@@ -14,12 +14,26 @@
   </head>
   <body>
     {% block body %}
+        <div class="container">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        </div>
+
+        <!-- The rest of your base.html content -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
           <a class="navbar-brand" href="{% url 'home' %}">
             Avidex Loaner List
           </a>
-          
+
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -50,6 +64,9 @@
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
                     <li><a class="dropdown-item" href="{% url 'password_change' %}">Change password</a></li>
+                    <li><a class="dropdown-item" href="{% url 'admin:upload-csv' %}">Upload .csv file to Inventory</a></li>
+                    <li><a class="dropdown-item" href="https://youtu.be/EkD-1Rd2aJI" target="_blank">How to print labels</a></li>
+
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="{% url 'logout' %}">Log out</a></li>
                   </ul>
@@ -81,6 +98,15 @@
     {% block scripts %}
     {% endblock scripts %}
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // Close the alert after 5 seconds (5000 milliseconds)
+        $(".alert").fadeTo(5000, 500).slideUp(500, function(){
+            $(this).slideUp(500);
+            $(this).remove();
+        });
+    });
+    </script>
   </body>
 
     <hr>

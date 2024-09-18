@@ -5,16 +5,16 @@
 {% block content %}
 
 <h1>Inventory</h1>
+<form method="get" class="align-items-center">
+    <div class="p-2 gy-2 gx-3 accordion accordion-collapse collapse show" id="searchAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="searchHeading">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#searchForm" aria-expanded="true" aria-controls="searchForm">
+                    Search filters
+                </button>
+            </h2>
 
-<div class="accordion" id="searchAccordion">
-    <div class="accordion-item">
-        <h2 class="accordion-header" id="searchHeading">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#searchForm" aria-expanded="true" aria-controls="searchForm">
-                Search for something
-            </button>
-        </h2>
-        <div id="searchForm" class="accordion-collapse collapse show" aria-labelledby="searchHeading">
-            <form method="get" class="accordion-body row gy-2 gx-3 align-items-center">
+            <div id="searchForm" class="accordion-body row" aria-labelledby="searchHeading">
 
                 <div class="col-auto">
                     <div class="input-group">
@@ -82,15 +82,26 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-auto">
-                    <input type="submit" value="Search" class="btn btn-primary">
-                </div>
 
-            </form>
+
 
             </div>
 
-</div>
+        </div>
+
+    </div>
+    <div class="p-2 input-group">
+        <span class="input-group-text">
+            <i class="bi bi-search"></i>
+        </span>
+        <input type="text" name="general_search" value="{{ SEARCH }}" class="form-control" placeholder="search for anything...">
+    </div>
+
+    <div class="col-auto p-2">
+        <input type="submit" value="Search" class="btn btn-primary">
+    </div>
+
+</form>
 
 <br>
 <!-- Show list of cards on mobile screens -->
