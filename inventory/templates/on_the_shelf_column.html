@@ -1,0 +1,7 @@
+<a data-toggle="tooltip" data-placement="top" title="{% if record.get_reservation_status %}Currently Reserved{% else %}Available for Reservation{% endif %}">
+    {% if record.get_reservation_status %}
+        <i class="bi bi-x-circle"></i>
+    {% else %}
+        <i class="bi bi-check-circle-fill"></i>
+    {% endif %}
+</a>

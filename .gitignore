@@ -1,0 +1,7 @@
+*.pyc
+*.pyo
+.idea
+.vscode
+db.sqlite3
+*.DS_Store
+*/migrations/*

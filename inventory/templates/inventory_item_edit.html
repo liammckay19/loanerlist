@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+
+            <h2>Edit {{ item.MAKE }} {{ item.PRODUCT_NAME }}</h2>
+            <h4>{{ item.PART_NUMBER }}</h4>
+
+            <form method="post" action="{% url 'edit_inventory_item' item.id %}">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    {{ edit_form.QTY.label_tag }}
+                    {{ edit_form.QTY }}
+                    {% if edit_form.QTY.errors %}
+                        <div class="text-danger">
+                            {{ edit_form.QTY.errors|first }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ edit_form.MAKE.label_tag }}
+                    {{ edit_form.MAKE }}
+                    {% if edit_form.MAKE.errors %}
+                        <div class="text-danger">
+                            {{ edit_form.MAKE.errors|first }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ edit_form.PART_NUMBER.label_tag }}
+                    {{ edit_form.PART_NUMBER }}
+                    {% if edit_form.PART_NUMBER.errors %}
+                        <div class="text-danger">
+                            {{ edit_form.PART_NUMBER.errors|first }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ edit_form.PRODUCT_NAME.label_tag }}
+                    {{ edit_form.PRODUCT_NAME }}
+                    {% if edit_form.PRODUCT_NAME.errors %}
+                        <div class="text-danger">
+                            {{ edit_form.PRODUCT_NAME.errors|first }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ edit_form.DESCRIPTION.label_tag }}
+                    {{ edit_form.DESCRIPTION }}
+                    {% if edit_form.DESCRIPTION.errors %}
+                        <div class="text-danger">
+                            {{ edit_form.DESCRIPTION.errors|first }}
+                        </div>
+                    {% endif %}
+                </div>
+
+
+                <div class="mb-3">
+                    {{ edit_form.SERIAL.label_tag }}
+                    {{ edit_form.SERIAL }}
+                    {% if edit_form.SERIAL.errors %}
+                        <div class="text-danger">
+                            {{ edit_form.SERIAL.errors|first }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ edit_form.NOTE.label_tag }}
+                    {{ edit_form.NOTE }}
+                    {% if edit_form.NOTE.errors %}
+                        <div class="text-danger">
+                            {{ edit_form.NOTE.errors|first }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ edit_form.SHELF.label_tag }}
+                    {{ edit_form.SHELF }}
+                    {% if edit_form.SHELF.errors %}
+                        <div class="text-danger">
+                            {{ edit_form.SHELF.errors|first }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    {{ edit_form.PRODUCT_TYPE.label_tag }}
+                    {{ edit_form.PRODUCT_TYPE }}
+                    {% if edit_form.PRODUCT_TYPE.errors %}
+                        <div class="text-danger">
+                            {{ edit_form.PRODUCT_TYPE.errors|first }}
+                        </div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-success">Save Changes</button>
+                <a href="{% url 'inventory_item_detail' item.id %}" class="btn btn-secondary">Cancel</a>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

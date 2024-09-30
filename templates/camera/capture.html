@@ -1,0 +1,40 @@
+
+
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Capture Image</h1>
+    <p>{{ message }}</p> <!-- Display the message from the view -->
+    <button id="capture-button">Capture Image</button>
+    <!-- Add this script tag to your HTML template -->
+    <script src="https://unpkg.com/@zxing/library@5.2.1"></script>
+
+    <script>
+        const captureButton = document.getElementById('capture-button');
+
+        captureButton.addEventListener('click', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                const videoElement = document.createElement('video');
+                videoElement.srcObject = stream;
+                document.body.appendChild(videoElement);
+                await videoElement.play();
+
+                const codeReader = new ZXing.BrowserQRCodeReader();
+
+                codeReader.decodeFromVideoElement(videoElement, (result, err) => {
+                    if (result) {
+                        alert(`QR Code: ${result.text}`);
+                        // Stop the video stream and clean up
+                        stream.getTracks().forEach(track => track.stop());
+                        document.body.removeChild(videoElement);
+                    } else if (err) {
+                        console.error('QR Code scanning error:', err);
+                    }
+                });
+            } catch (error) {
+                console.error('Error capturing image:', error);
+            }
+        });
+
+    </script>
+{% endblock content %}

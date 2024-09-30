@@ -1,0 +1,23 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <h1>Upload CSV</h1>
+    <p>To ensure a smooth upload process and avoid errors, please follow these steps:</p>
+    <ol>
+        <li><strong>Access the Template:</strong> Use the provided Google Sheets template, which contains pre-defined PRODUCT TYPE matches aligned with this website's requirements.</li>
+        <li><strong>Make a Copy:</strong> Create your own copy of the Google Sheet to edit.</li>
+        <li><strong>Enter Your Data:</strong> Input your inventory items into the Google Sheet, following the template format closely.</li>
+        <li><strong>Download as CSV:</strong> Once you've entered your data, download the sheet as a CSV file.</li>
+        <li><strong>Upload Here:</strong> Use the form below to upload your prepared CSV file.</li>
+    </ol>
+    <p>Click the button below to view and copy the Google Sheets template:</p>
+    <a href="https://docs.google.com/spreadsheets/d/1H54d7HzQMW6V47RzPRmhrX3eBgPsJxDhSGbVNJFTFGY/edit?usp=sharing" target="_blank" class="button">View CSV Template</a>
+    <br/><br/> <!-- Add some space before the form -->
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+</div>
+{% endblock %}

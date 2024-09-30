@@ -1,0 +1,40 @@
+# constants.py
+CURRENT_DOMAIN_NAME = "avidexloanerlistfremont.pythonanywhere.com"
+
+# Define the category choices:
+MISCELLANEOUS = 'Miscellaneous'
+UNCATEGORIZED = 'UNCATEGORIZED'
+ACCESSORIES = 'Accessories'
+AMPLIFIERS = 'Amplifiers'
+POWER_PROTECTION = 'Power Protection'
+CONTROL_PANELS = 'Control Panels and Interfaces'
+CONVERTERS = 'Converters'
+MICROPHONES = 'Microphones and Audio Devices'
+DISPLAYS = 'Displays'
+POWER_SUPPLIES = 'Power Supplies'
+SWITCHERS_EXTENDERS = 'Switchers and Extenders'
+CONTROL_SYSTEMS = 'Control Systems'
+PROCESSORS = 'Processors'
+TRANSMITTERS_RECEIVERS = 'Transmitters & Receivers'
+CARDS_MODULES = 'Cards & Modules'
+SCALERS = 'Scalers'
+
+CATEGORY_CHOICES = [
+    ("MISCELLANEOUS", MISCELLANEOUS),
+    ("UNCATEGORIZED", UNCATEGORIZED),
+    ("ACCESSORIES", ACCESSORIES),
+    ("AMPLIFIERS", AMPLIFIERS),
+    ("POWER_PROTECTION", POWER_PROTECTION),
+    ("CONTROL_PANELS", CONTROL_PANELS),
+    ("CONVERTERS", CONVERTERS),
+    ("MICROPHONES", MICROPHONES),
+    ("DISPLAYS", DISPLAYS),
+    ("POWER_SUPPLIES", POWER_SUPPLIES),
+    ("SWITCHERS_EXTENDERS", SWITCHERS_EXTENDERS),
+    ("CONTROL_SYSTEMS", CONTROL_SYSTEMS),
+    ("PROCESSORS", PROCESSORS),
+    ("TRANSMITTERS_RECEIVERS", TRANSMITTERS_RECEIVERS),
+    ("CARDS_MODULES", CARDS_MODULES),
+    ("SCALERS", SCALERS),
+]
+CHOICE_FIELDS = {key: name for key, name in CATEGORY_CHOICES}

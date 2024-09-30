@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ profile.user.username }}{% endblock %}
+
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-6 col-md-8 col-sm-10 mx-auto">
+    <div class="card my-4">
+
+      <div class="card-body flex-wrap d-flex align-items-center">
+        <div class="avatar-wrapper bg-info mb-4">
+          {% if profile.user.profile.avatar %}
+            <img class='img-fluid' src="{{ profile.user.profile.avatar.url }}" alt="{{ profile.user.profile.user }}">
+          {% endif %}
+        </div>
+        <div class="container">
+          <h1 class="card-title">{{ profile.user.username }}</h1>
+          {% if profile.public_email %}
+          <h2 class="card-subtitle mb-2 text-muted">{{ user.email }}</h2>
+          {% endif %}
+          <hr>
+          <p class="card-text">{{ user.first_name }} {{ user.last_name }}</p>
+          <p class="card-text">{{ profile.bio }}</p>
+          {% if profile.location %}
+          <p class="card-text"><i class="fas fa-map-marker-alt"></i> {{ profile.location }}</p>
+          {% else %}
+          <p class="card-text"><i class="fas fa-map-marker-alt"></i> Location not specified</p>
+          {% endif %}
+          {% if profile.artist_link %}
+          <a href="{{profile.artist_link}}" target="_blank" class="card-link"><i class="fas fa-music"></i> {{ profile.artist_link }}</a>
+          {% else %}
+          <a href="" class="card-link"><i class="fas fa-music"></i> No artist link</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>  
+  <div class="col-lg-6 col-md-8 col-sm-10 mx-auto">
+    <h2>{{profile.get_count_live_performances}} Past Performances to date</h2>
+    {% for p in profile.get_live_performances %}
+    <div class="card my-4">
+      <div class="card-body">
+        <h5 class="card-title">{{p.title}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{p.band_name}}</h6>
+        <hr>
+        <p class="card-text">{{p.address}}</p>
+        <p class="card-text"><i class="far fa-calendar-alt"></i> {{p.date_played}}</p>
+      </div>
+    </div>
+    {% empty %}
+    <div class="card my-4">
+      <div class="card-body">
+        <h5 class="card-title">No performances yet!</h5>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+{% endblock %}
